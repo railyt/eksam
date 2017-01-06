@@ -13,7 +13,7 @@ class Event{
 		$stmt = $this->connection->prepare("INSERT INTO Menu (Food, Day, Price) VALUE (?, ?, ?)");
 		echo $mysqli->error;
 		
-		$stmt->bind_param("ssi", $Food, $Day, $Price);
+		$stmt->bind_param("ssd", $Food, $Day, $Price);
 		
 		if ( $stmt->execute() ) {
 			echo "õnnestus <br>";
@@ -51,7 +51,7 @@ class Event{
 				ORDER BY $sort $orderBy
 				");
 			$searchWord="%".$q."%";
-			$stmt->bind_param("ss", $searchWord, $searchWord);
+			$stmt->bind_param("sss", $searchWord, $searchWord, $searchWord);
 		}else {
 			//ei otsi
 			$stmt = $this->connection->prepare("

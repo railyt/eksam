@@ -11,10 +11,10 @@
 	require("../class/Event.class.php");
 	$Event= new Event($mysqli);
 	
-	if(!isset($_SESSION["userId"])){
+	/*if(!isset($_SESSION["userId"])){
 		header("Location: data.php");
 		exit();
-	}
+	}*/
 	if (isset($_GET["logout"])) {
 		SESSION_destroy();
 		header("Location: data.php");
