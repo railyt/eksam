@@ -57,13 +57,13 @@
 		return $notice;
 	}
 	
-	function saveEvent($City, $Cinema, $Movie, $Genre, $Comment, $Rating) {
+	function saveEvent($Food, $Day, $Price) {
 		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
 		
-		$stmt = $mysqli->prepare("INSERT INTO kino (City, Cinema, Movie, Genre, Comment, Rating) VALUE (?, ?, ?, ?, ?, ?)");
+		$stmt = $mysqli->prepare("INSERT INTO Menu (Food, Day, Price) VALUE (?, ?, ?)");
 		echo $mysqli->error;
 		
-		$stmt->bind_param("sssssi", $City, $Cinema, $Movie, $Genre, $Comment, $Rating);
+		$stmt->bind_param("sii", $Food, $Day, $Price);
 		
 		if ( $stmt->execute() ) {
 			echo "õnnestus <br>";
@@ -77,17 +77,16 @@
 	function getAllPeople(){
 		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
 		
-		$stmt=$mysqli->prepare("SELECT id, City, Cinema, Movie, Genre, Comment, Rating FROM kino WHERE deleted IS NULL");
-		$stmt->bind_result($id, $City, $Cinema, $Movie, $Genre, $Comment, $Rating);
+		$stmt=$mysqli->prepare("SELECT id, Food, Day, Price FROM Menu WHERE deleted IS NULL");
+		$stmt->bind_result($id, $Food, $Day, $Price);
 		$stmt->execute();
 		$results=array();
-		//tsüklissisu toiimib seni kaua, mitu rida SQL lausega tuleb
 		while($stmt->fetch()) {
 			$human=new StdClass();
 			$human->id=$id;
-			$human->City=$City;
-			$human->Cinema=$Cinema;
-			$human->Movie=$Movie;
+			$human->Food=$Food;
+			$human->Day=$Day;
+			$human->Price=$Price;
 			$human->Genre=$Genre;
 			$human->Comment=$Comment;
 			$human->Rating=$Rating;
@@ -105,19 +104,4 @@
 		$input=htmlspecialchars($input);
 		return $input;
 	}
-	
-	
-	
-	
-	/*function sum($x, $y) {
-		return $x + $y;
-	}
-	echo sum(12312312,12312355553);
-	echo "<br>";
-	function hello($n, $p) {
-		return "Tere tulemast ".$n." ". $p;
-	}
-	echo hello("Raily", "T");
-	echo "<br>";
-	*/
 ?>
